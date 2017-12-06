@@ -30,7 +30,7 @@ RUN curl -o monacoin-0.14.2-x86_64-linux-gnu.tar.gz -L https://github.com/monaco
 RUN tar xzvf monacoin-0.14.2-x86_64-linux-gnu.tar.gz
 WORKDIR /tmp/monacoin-monacoin-0.14.2
 RUN ./autogen.sh
-RUN ./configure
+RUN ./configure --disable-tests --disable-bench
 RUN make -j "$(nproc)"
 RUN make install
 
