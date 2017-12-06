@@ -6,12 +6,38 @@ jobs:
       - image: docker:17.11.0-ce
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+
+      - setup_remote_docker
+        # This feature is available only for paid projects
+        # https://circleci.com/docs/2.0/docker-layer-caching/
+        # docker_layer_caching: true
+
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/monacoind.tar
+
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/monacoind.tar | true
 
       - run:
           name: Build Docker image
           command: docker build -t monacoind .
+
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/monacoind.tar monacoind
+
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
 
       - run:
           name: Push image to Docker Hub
