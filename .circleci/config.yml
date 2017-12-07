@@ -41,10 +41,3 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
-
-      - run:
-          name: Push image to Docker Hub
-          command: |
-            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-            docker tag monacoind "osyoyu/monacoind:0.14.2"
-            docker push "osyoyu/monacoind:0.14.2"
