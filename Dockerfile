@@ -1,19 +1,26 @@
-FROM alpine:3.6
+FROM ubuntu:16.04
 
-RUN apk update
-RUN apk add \
-  autoconf \
-  automake \
-  boost-dev \
-  coreutils \
-  curl \
-  file \
-  gcc \
-  g++ \
-  libevent-dev \
-  libtool \
-  make \
-  openssl-dev
+# RUN locale-gen en_US.UTF-8
+# ENV LANG en_US.utf8
+# ENV LC_ALL en_US.UTF-8
+
+RUN apt-get update && apt-get install -y \
+    autoconf \
+    curl \
+    gcc \
+    g++ \
+    libboost-dev \
+    libboost-filesystem-dev \
+    libboost-program-options-dev \
+    libboost-system-dev \
+    libboost-thread-dev \
+    libevent-dev \
+    libssl-dev \
+    libtool \
+    make \
+    pkg-config
+
+RUN apt-get clean
 
 # Build db4.8
 WORKDIR /tmp
