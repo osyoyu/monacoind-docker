@@ -41,4 +41,9 @@ RUN ./configure --disable-tests --disable-bench
 RUN make -j "$(nproc)"
 RUN make install
 
+VOLUME ["/root/.monacoin"]
+
+# P2P = 9401, RPC = 9402
+EXPOSE 9401 9402
+
 CMD ["monacoind"]
