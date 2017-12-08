@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: Build Docker image
-          command: docker build -t monacoind .
+          command: docker build --cache-from monacoind -t monacoind .
 
       - run:
           name: Save Docker image layer cache
@@ -40,4 +40,4 @@ jobs:
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/app.tar
+            - /caches/monacoind.tar
